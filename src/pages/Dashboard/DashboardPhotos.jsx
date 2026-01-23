@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import photoStore from "../../photoStore";
+import photoStore from "../../photostore";
 
 
 const DashboardPhotos = () => {
