@@ -1,6 +1,7 @@
 import "./Services.css";
 import ServiceCard from "./ServiceCard";
-import servicesData from "./servicesData";
+import ServicesData from "./ServicesData.jsx";
+
 
 const Services = () => {
   return (
@@ -18,7 +19,7 @@ const Services = () => {
       </div>
 
       <div className="grid">
-        {servicesData.map((item) => (
+        {ServicesData.map((item) => (
           <ServiceCard
             key={item.id}
             icon={item.icon}
