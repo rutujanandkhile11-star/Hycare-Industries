@@ -11,7 +11,7 @@ import HomePhotoSection from "./HomePhotoSection";
 import FAQComponent from "./FAQComponent";
 
 // Store (CASE SENSITIVE ✔️)
-import photoStore from "../../store/photoStore";
+import photoStore from "../photoStore.jsx";
 
 
 // Assets
