@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Rutuja"
+    },
+    {
+      "id": 2,
+      "name": "Admin"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "senderId": 1,
+      "receiverId": 2,
+      "text": "Hello!",
+      "timestamp": "2026-01-11 10:30"
+    },
+    {
+      "id": 2,
+      "senderId": 2,
+      "receiverId": 1,
+      "text": "Hi, how can I help you?",
+      "timestamp": "2026-01-11 10:31"
+    }
+  ]
+}
