@@ -11,7 +11,7 @@ import HomePhotoSection from "./HomePhotoSection";
 import FAQComponent from "./FAQComponent";
 
 // Store (CASE SENSITIVE ✔️)
-// import photoStore from "../store/photoStore";
+import photoStore from "../store/photostore";
 
 
 // Assets
@@ -54,7 +54,7 @@ const Home = () => {
       <Stats />
       <Services />
       <Partners />
-      {/* <HomePhotoSection photos={photoStore.photos} /> */}
+      <HomePhotoSection photos={photoStore.photos} />
       <PartnershipSection />
       <FAQComponent />
     </>

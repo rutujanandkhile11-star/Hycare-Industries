@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import photoStore from "../../store/photoStore";
+import photoStore from "../store/photostore";
 import "./HomephotoSection.css"
 
 const HomePhotoSection = () => {
