@@ -1,15 +1,11 @@
-// src/store/photoStore.js
-
 const PHOTO_STORAGE_KEY = "photos";
 
-// Safe read from localStorage (browser only)
 const getPhotos = () => {
   if (typeof window === "undefined") return [];
   const data = localStorage.getItem(PHOTO_STORAGE_KEY);
   return data ? JSON.parse(data) : [];
 };
 
-// Safe save to localStorage (browser only)
 const savePhotos = (photos) => {
   if (typeof window === "undefined") return;
   localStorage.setItem(PHOTO_STORAGE_KEY, JSON.stringify(photos));
@@ -18,7 +14,6 @@ const savePhotos = (photos) => {
 const photoStore = {
   photos: [],
 
-  // Call this after component mounts
   load() {
     this.photos = getPhotos();
   },

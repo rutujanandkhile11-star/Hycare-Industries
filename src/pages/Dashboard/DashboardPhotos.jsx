@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import photoStore from "../../store/photoStore";
-
+import photoStore from "../../store/photostore";
 
 const DashboardPhotos = () => {
   const [photos, setPhotos] = useState([]);
@@ -12,8 +11,9 @@ const DashboardPhotos = () => {
 
   const fileInputRef = useRef(null);
 
-  // Load photos on mount
+  // ✅ LOAD PHOTOS ON MOUNT
   useEffect(() => {
+    photoStore.load();
     setPhotos([...photoStore.photos]);
   }, []);
 
@@ -46,7 +46,11 @@ const DashboardPhotos = () => {
 
     if (editingId) {
       const oldPhoto = photos.find((p) => p.id === editingId);
-      const updatedPhoto = { id: editingId, title, image: imageBase64 || oldPhoto.image };
+      const updatedPhoto = {
+        id: editingId,
+        title,
+        image: imageBase64 || oldPhoto.image,
+      };
       photoStore.update(editingId, updatedPhoto);
       setMessage("✅ Photo updated successfully");
     } else {
@@ -69,7 +73,6 @@ const DashboardPhotos = () => {
     setEditingId(photo.id);
     setPreviewImage(photo.image);
     setFile(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const deletePhoto = (id) => {
@@ -83,18 +86,13 @@ const DashboardPhotos = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-3">Photo Management</h2>
+      <h2>Photo Management</h2>
 
-      {/* Success Message */}
-      {message && <div className="alert alert-success text-center">{message}</div>}
+      {message && <div className="alert alert-success">{message}</div>}
 
-      {/* Form */}
-      <form
-        onSubmit={addOrUpdatePhoto}
-        className="mb-3 d-flex flex-column flex-md-row gap-2 align-items-start"
-      >
+      <form onSubmit={addOrUpdatePhoto} className="mb-3">
         <input
-          className="form-control"
+          className="form-control mb-2"
           placeholder="Photo Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -103,89 +101,63 @@ const DashboardPhotos = () => {
 
         <input
           type="file"
-          className="form-control"
+          className="form-control mb-2"
           accept="image/*"
           ref={fileInputRef}
           onChange={(e) => {
-            const selectedFile = e.target.files[0];
-            setFile(selectedFile);
-            if (selectedFile) setPreviewImage(URL.createObjectURL(selectedFile));
+            const f = e.target.files[0];
+            setFile(f);
+            if (f) setPreviewImage(URL.createObjectURL(f));
           }}
           required={!editingId}
         />
 
-        <div className="d-flex gap-2 flex-wrap">
-          <button className="btn btn-primary">{editingId ? "Update" : "Add"}</button>
-          {editingId && (
-            <button type="button" className="btn btn-secondary" onClick={resetForm}>
-              Cancel
-            </button>
-          )}
-        </div>
+        <button className="btn btn-primary">
+          {editingId ? "Update" : "Add"}
+        </button>
       </form>
 
-      {/* Image Preview */}
-      {editingId && previewImage && (
-        <div className="mb-4">
-          <label className="form-label">Current Image</label>
-          <br />
-          <img
-            src={previewImage}
-            alt="Preview"
-            style={{
-              width: "120px",
-              height: "80px",
-              objectFit: "cover",
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
-      )}
-
-      {/* Table */}
-      <div className="table-responsive">
-        <table className="table table-bordered table-hover">
-          <thead className="table-dark">
-            <tr>
-              <th>Preview</th>
-              <th>Title</th>
-              <th style={{ minWidth: "160px" }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {photos.length > 0 ? (
-              photos.map((p) => (
-                <tr key={p.id}>
-                  <td>
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      style={{ width: "100px", height: "70px", objectFit: "cover" }}
-                    />
-                  </td>
-                  <td>{p.title}</td>
-                  <td>
-                    <div className="d-flex flex-wrap gap-2">
-                      <button className="btn btn-warning btn-sm" onClick={() => editPhoto(p)}>
-                        Edit
-                      </button>
-                      <button className="btn btn-danger btn-sm" onClick={() => deletePhoto(p.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="text-center">
-                  No photos added yet
+      <table className="table table-bordered">
+        <thead className="table-dark">
+          <tr>
+            <th>Preview</th>
+            <th>Title</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {photos.length ? (
+            photos.map((p) => (
+              <tr key={p.id}>
+                <td>
+                  <img src={p.image} alt="" width="100" />
+                </td>
+                <td>{p.title}</td>
+                <td>
+                  <button
+                    className="btn btn-warning btn-sm me-2"
+                    onClick={() => editPhoto(p)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => deletePhoto(p.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="text-center">
+                No photos added
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
