@@ -26,7 +26,7 @@ const Navbar = () => {
     </a>
   </span>
 
-  <span>🕒 Mon-Fri: 8am – 7pm</span>
+  <span>🕒 Mon-sat: 8am – 7pm</span>
 </div>
 
       </div>
