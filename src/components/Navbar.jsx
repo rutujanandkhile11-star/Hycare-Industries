@@ -60,7 +60,7 @@ const Navbar = () => {
       <Link to="/gallery/springs-jobs">SPRINGS JOB'S</Link>
     </div>
   </div> */}
-            <Link to="/contact">Contacts</Link>
+            <Link to="/contact">Contact</Link>
           </nav>
 
           {/* RIGHT SIDE */}
